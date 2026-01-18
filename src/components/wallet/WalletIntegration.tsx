@@ -70,7 +70,7 @@ export default function WalletIntegration({ card }: WalletIntegrationProps) {
   };
 
   const shareCard = async () => {
-    if (navigator.share) {
+    if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent )) {
       try {
         await navigator.share({
           title: `${card.name} - Digital Business Card`,

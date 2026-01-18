@@ -34,6 +34,8 @@ import RealEstateCard from './RealEstateCard';
 import AppointmentForm from '@/components/appointments/AppointmentForm';
 import WalletIntegration from '@/components/wallet/WalletIntegration';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useLanguage } from '@/contexts/LanguageContext';
+
 
 interface BusinessCardDisplayProps {
   card: any;
@@ -53,6 +55,8 @@ function DefaultBusinessCardDisplay({
 }: BusinessCardDisplayProps) {
   const [showQRCode, setShowQRCode] = useState(false);
   const [showWalletIntegration, setShowWalletIntegration] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
 
   const getSocialIcon = (platform: string) => {
     const iconComponents: { [key: string]: React.ComponentType<any> } = {
@@ -80,11 +84,13 @@ function DefaultBusinessCardDisplay({
   };
 
   const handleShare = async (event?: React.MouseEvent) => {
+
+  //   console.log("handleShare");
     const shareUrl = getPublicCardUrl();
     const shareText = `${card.name} - ${card.position || ''} at ${card.company || ''}`;
     const shareTitle = `${card.name} 的数字名片`;
 
-    if (navigator.share) {
+    if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent )) {
       try {
         await navigator.share({
           title: shareTitle,
@@ -103,7 +109,12 @@ function DefaultBusinessCardDisplay({
       // Fallback: copy to clipboard
       await copyToClipboard(shareUrl, event);
     }
+    
   };
+
+
+
+
 
   const copyToClipboard = async (text: string, event?: React.MouseEvent) => {
     try {
@@ -214,7 +225,7 @@ END:VCARD`;
           <div className="space-y-4 mb-6">
             <h2 className="text-lg font-semibold flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
-              联系方式
+              {t('contact')}
             </h2>
             
             <div className="grid gap-3">
@@ -381,7 +392,7 @@ END:VCARD`;
           <div className="flex flex-wrap gap-3 pt-4 border-t">
             <Button onClick={(e) => handleShare(e)} variant="outline">
               <Share2 className="w-4 h-4 mr-2" />
-              分享
+              {t('share')}
             </Button>
             
             <Button onClick={downloadVCard} variant="outline">

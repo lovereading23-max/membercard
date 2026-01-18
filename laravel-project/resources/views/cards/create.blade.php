@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', '创建名片 - APEXCARD')
+@section('title')
+    创建名片 - APEXCARD
+@endsection
 
 @section('content')
 <div class="min-h-screen bg-gray-50">
@@ -357,4 +359,4 @@
         lucide.createIcons();
     });
 </script>
-@endsection
+@endpush

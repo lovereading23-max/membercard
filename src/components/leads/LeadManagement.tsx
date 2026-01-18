@@ -168,6 +168,7 @@ export default function LeadManagement({ userId }: LeadManagementProps) {
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [selectedDeleteLead, setSelectedDeleteLead] = useState<Lead | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -478,15 +479,15 @@ export default function LeadManagement({ userId }: LeadManagementProps) {
   };
 
   const handleDeleteLead = async () => {
-    if (!selectedLead) return;
+    if (!selectedDeleteLead) return;
 
     try {
-      const response = await fetch(`/api/leads/${selectedLead.id}`, {
+      const response = await fetch(`/api/leads/${selectedDeleteLead.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
-        setLeads(leads.filter(lead => lead.id !== selectedLead.id));
+        setLeads(leads.filter(lead => lead.id !== selectedDeleteLead.id));
         setIsDeleteDialogOpen(false);
         setSelectedLead(null);
         toast({
@@ -692,7 +693,7 @@ export default function LeadManagement({ userId }: LeadManagementProps) {
   };
 
   const openDeleteDialog = (lead: Lead) => {
-    setSelectedLead(lead);
+    setSelectedDeleteLead(lead);
     setIsDeleteDialogOpen(true);
   };
 
@@ -1176,7 +1177,7 @@ export default function LeadManagement({ userId }: LeadManagementProps) {
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <AlertDialog open={isDeleteDialogOpen && selectedLead?.id === lead.id} onOpenChange={(open) => !open && setSelectedLead(null)}>
+                        <AlertDialog open={isDeleteDialogOpen && selectedDeleteLead?.id === lead.id} onOpenChange={(open) => !open && setSelectedDeleteLead(null)}>
                           <AlertDialogTrigger asChild>
                             <Button
                               variant="ghost"

@@ -84,7 +84,10 @@ class CardController extends Controller
         if ($existingCardsCount >= $maxCards) {
             return response()->json([
                 'error' => 'Card limit reached',
-                'message' => "您的{$user->subscription_plan === 'free' ? '免费' : '专业'}套餐最多只能创建{$maxCards}张名片。请升级套餐以创建更多名片。",
+                // 'message' => "您的{$user->subscription_plan === 'free' ? '免费' : '专业'}套餐最多只能创建{$maxCards}张名片。请升级套餐以创建更多名片。",
+                'message' => '您的' 
+                    . ($user->subscription_plan === 'free' ? '免费' : '专业')
+                    . "套餐最多只能创建{$maxCards}张名片。请升级套餐以创建更多名片。",
                 'currentCards' => $existingCardsCount,
                 'maxCards' => $maxCards,
                 'subscriptionPlan' => $user->subscription_plan

@@ -59,6 +59,10 @@ This scaffold provides a robust foundation built with:
 ```bash
 # Install dependencies
 npm install
+npx prisma generate
+
+#Run below to create the db file, apply migrations, generate the Prisma client :
+npx prisma migrate dev --name init
 
 # Start development server
 npm run dev

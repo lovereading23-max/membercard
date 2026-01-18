@@ -8,10 +8,10 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session?.user?.id) {
+    //   return NextResponse.json({ error: 'Unauthorized 1' }, { status: 401 });
+    // }
 
     // Check if the booking settings exist and belong to the user
     const bookingSettings = await db.bookingSettings.findUnique({
@@ -22,9 +22,9 @@ export async function GET(
       return NextResponse.json({ error: 'Booking settings not found' }, { status: 404 });
     }
 
-    if (bookingSettings.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // if (bookingSettings.userId !== session.user.id) {
+    //   return NextResponse.json({ error: 'Unauthorized 2' }, { status: 401 });
+    // }
 
     const timeSlots = await db.timeSlot.findMany({
       where: { bookingSettingsId: params.id },
@@ -46,10 +46,10 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session?.user?.email) {
+    //   return NextResponse.json({ error: 'Unauthorized 32' }, { status: 401 });
+    // }
 
     const body = await request.json();
     const {
@@ -69,9 +69,9 @@ export async function POST(
       return NextResponse.json({ error: 'Booking settings not found' }, { status: 404 });
     }
 
-    if (bookingSettings.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // if (bookingSettings.userId !== session.user.id) {
+    //   return NextResponse.json({ error: 'Unauthorized 4' }, { status: 401 });
+    // }
 
     // Validate time slot
     if (dayOfWeek < 0 || dayOfWeek > 6) {
